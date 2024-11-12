@@ -148,18 +148,23 @@ class Corso implements ICorso{
     }
 
     aggiungiPartecipante(partecipante: IPartecipante): void {
-        if(!this.elencoIscritti.some(x => x === partecipante)){
-            console.log("Aggiornamento elenco iscritti");
-            this.elencoIscritti.push(partecipante);
-            console.log("Riepilogo iscritti corso: "+this.titolo);
-            this.elencoIscritti.forEach(iscritto => {
-                console.log(iscritto.nome+ '-' + iscritto.cognome);
-            });
-            console.info(partecipante.nome+" "+partecipante.cognome+" inserito al corso: "+this.titolo+"\n")
-        }else{
-            console.error("Partecipante già presente, nuova iscrizione non riuscita\n")
+        try{
+            if(!this.elencoIscritti.some(x => x === partecipante)){
+                console.log("Aggiornamento elenco iscritti");
+                this.elencoIscritti.push(partecipante);
+                console.log("Riepilogo iscritti corso: "+this.titolo);
+                this.elencoIscritti.forEach(iscritto => {
+                    console.log(iscritto.nome+ '-' + iscritto.cognome);
+                });
+                console.info(partecipante.nome+" "+partecipante.cognome+" inserito al corso: "+this.titolo+"\n")
+            }else{
+                
+                throw new PartecipanteAlredyExistsException(partecipante);
+            }
         }
-        
+        catch(error){
+            console.error(error.name+": "+error.message);
+        }
     }
 }
 
@@ -184,12 +189,18 @@ class Azienda implements IAzienda{
     }
 
     offriPosizione(partecipante: IPartecipante, posizione: string): void{
-        if(this.partecipantiFormati.some(x => x === partecipante)){
-           console.info("Proposta di lavoro per partecipante "+partecipante.nome+" "+partecipante.cognome+" da "+this.nome+": "+posizione);
+        try{
+            if(this.partecipantiFormati.some(x => x === partecipante)){
+            console.info("Proposta di lavoro per partecipante "+partecipante.nome+" "+partecipante.cognome+" da "+this.nome+": "+posizione);
+            }
+            else{
+                throw new PartecipanteNotFormedException(partecipante);
+            }
         }
-        else{
-            console.log(partecipante.nome+" "+partecipante.cognome+" non è stato ancora formato!");
+        catch(error){
+            console.error(error.name+": "+error.message);
         }
+        
         
     };
 
@@ -201,6 +212,22 @@ class Azienda implements IAzienda{
         console.log("L'azienda "+this.nome+" consulta la lista di persone iscritte ad un corso qualsiasi:\n")
         console.log(listaFormati)
         this.partecipantiFormati = listaFormati;
+    }
+}
+
+//Definizione BusinessLogicExceptions
+class PartecipanteNotFormedException extends Error {
+    constructor(partecipante: Partecipante, message: string = "") {
+        super(message)
+        this.message = partecipante.nome+" "+partecipante.cognome+" non è stato ancora formato!";
+        this.name = "Partecipante Not Formed Exception";
+    }
+}
+class PartecipanteAlredyExistsException extends Error {
+    constructor(partecipante: Partecipante, message: string = "") {
+        super(message)
+        this.message = "Partecipante "+partecipante.nome+" "+partecipante.cognome+" già presente nel corso, nuova iscrizione non riuscita\n!";
+        this.name = "Partecipante Alredy Exists Exception";
     }
 }
 

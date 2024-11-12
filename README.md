@@ -24,8 +24,9 @@
 
 <h2 id="features">🎯 Features</h2> 
 
-* 🔍 **Custom types**. Use of custom Typescript custom types.
+* 🔍 **Custom types**. Use of custom Typescript types.
 * 📒 **Custom functions**. Use of global functions and methods to create objects/do things.
+* 🔍 **Custom exceptions**. Use of custom Typescript exceptions to decide Business dont's that may occur.
 * 😎 **Interfaces**. Use of IPartecipante, ICorso, IAzienda.
 * 📱**Classes**. Use of Partecipante, Corso, Azienda.
 * 🚔 **Tested**. CodePen, Nodejs <br/>
@@ -40,8 +41,8 @@
 <p>The main program tests the following cases:</p>
   
 * Creation of environment to work on
-* A Azienda try to offer Partecipante a job while he's not formed yet (he is not on the formed Partecipants list yet) -> BusinessLogicException
-* Some Partecipantes submit subscription to one of the courses (Corso) offered
+* A Azienda try to offer Partecipante a job while he's not formed yet (he is not on the formed Partecipants list yet) -> PartecipanteNotFormedException
+* Some Partecipantes submit subscription to one of the courses (Corso) offered. One of them who subscribed decides to enroll again -> PartecipanteAlredyExistsException
 * One of the Aziendas decides to get the list of formed Partecipante again and offers two jobs applications to two Partecipantes
 
 
