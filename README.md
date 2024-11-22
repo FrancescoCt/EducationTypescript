@@ -48,4 +48,4 @@
 
 ## 💻 How to test it
 
-* Download the current repository and test it on localhost or try it online. Here is the [link to CodePen]([https://francescoct.github.io/projects/hackerNews/dist/](https://codepen.io/Francesco-Catania/pen/ExqmMdX)).
+* Download the current repository and test it on localhost or try it online. Here is the link to [CodePen](https://codepen.io/Francesco-Catania/pen/ExqmMdX).
